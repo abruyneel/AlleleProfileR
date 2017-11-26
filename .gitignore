@@ -31,3 +31,11 @@ vignettes/*.pdf
 # Temporary files created by R markdown
 *.utf8.md
 *.knit.md
+.Rproj.user
+
+# compiled code
+/src/*.o
+/src/*.so
+
+# computed test data
+/tests/testthat/files/output/*

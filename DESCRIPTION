@@ -1,0 +1,17 @@
+Package: AlleleProfileR
+Title: Genome editing strategy agnostic variant identification and profiling tool
+Version: 0.1.0.0000
+Authors@R: person("Arne", "Bruyneel", email = "arne.bruyneel@gmail.com", role = c("aut", "cre"))
+Description: Gene editing strategies, such as zinc-finger nucleases (ZFNs), transcription activator-like effector nucleases (TALENs) and clustered regularly interspaced short palindromic repeat/Cas9 (CRISPR/Cas9), are revolutionizing biochemistry. Potent, yet flexible, bioinformatics technologies are required to aid in the profiling of the generated transgenic cell lines, plants or animals. Here, we present AlleleProfileR, a novel analysis tool, written in a combination of R and C++, with the ability to batch process the sequence analysis of large and complex experiments, including base editing and large deletions created by using two guides.  
+Depends: R (>= 3.5.0)
+Imports: stats, utils, Biostrings, GenomicAlignments, GenomicRanges, BiocGenerics,
+  Rsamtools, XVector, doParallel, dplyr, foreach, ggplot2, forcats, 
+  ggpubr, gsubfn, reshape2, Rcpp (>= 0.12.14), ggseqlogo, cowplot, stringr
+License: GPL-2
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.1
+LinkingTo: Rcpp, BH
+SystemRequirements: C++11
+Suggests: 
+    testthat

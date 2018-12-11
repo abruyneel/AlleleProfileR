@@ -38,4 +38,5 @@ vignettes/*.pdf
 /src/*.so
 
 # computed test data
-/tests/testthat/files/output/*
+/tests/testthat/files/output/*.csv
+/tests/testthat/files/output/*.txt

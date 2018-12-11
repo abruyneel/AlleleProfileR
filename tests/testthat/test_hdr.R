@@ -12,10 +12,10 @@ test_that("HDR", {
   alternateinfo <- AlleleProfileR.alternatereference(crispr_config, alternate = "files/index/alternate.fastq")
 
   # run
-  AlleleProfileR.batch(crispr_config, cores=1, subset = list(c(4),c(2)))
+  AlleleProfileR.batch(crispr_config, cores=1, subset = list(c(3),c(2)))
 
   # test whether files were read properly
   expect_equal(alternateinfo[2,"allele"], "exon.22_24del")
   # test HDR reads
-  expect_equal(AlleleProfileR.plot.mutationtypes(crispr_config, 4, 2, alternate = alternateinfo, title = F, plot = F)[3,'reads'], 38)
+  expect_equal(AlleleProfileR.plot.mutationtypes(crispr_config, 3, 2, alternate = alternateinfo, title = F, plot = F)[3,'reads'], 38)
 })

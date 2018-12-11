@@ -11,11 +11,11 @@ test_that("profile", {
                                         cut.range = 0, ignore.single = T, cutoff.large = 25, ignore.chimeric = F,
                                         chimeric.max.insertion.size = 50, suppress.messages = T)
 
-  AlleleProfileR.batch(crispr_config, cores=1, subset = list(c(3),c(3)))
+  AlleleProfileR.batch(crispr_config, cores=1, subset = list(c(2),c(3)))
 
   # check allele names
-  expect_equal(AlleleProfileR.sample.distribution(crispr_config, 3, 3, plotparam = 2, plot = F)[1,"allele"], "exon.6_7insT")
+  expect_equal(AlleleProfileR.sample.distribution(crispr_config, 2, 3, plotparam = 2, plot = F)[1,"allele"], "exon.6_7insT")
   # check profile, pstop TRUE?
-  expect_equal(AlleleProfileR.sample.distribution.boolean(crispr_config, 3, 3, plot = FALSE, alternate = NULL, plotparam = c("wt",'fs','snp','atg','coding','stop','pstop','sm','lg','utr','cryptic','error'))[1,'pstop'], 1)
+  expect_equal(AlleleProfileR.sample.distribution.boolean(crispr_config, 2, 3, plot = FALSE, alternate = NULL, plotparam = c("wt",'fs','snp','atg','coding','stop','pstop','sm','lg','utr','cryptic','error'))[1,'pstop'], 1)
 
 })

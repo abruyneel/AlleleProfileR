@@ -11,10 +11,10 @@ test_that("chim", {
                                         cut.range = 0, ignore.single = T, cutoff.large = 25, ignore.chimeric = F,
                                         chimeric.max.insertion.size = 50, suppress.messages = T)
 
-  AlleleProfileR.batch(crispr_config, cores=1, subset = list(c(7),c(1)))
+  AlleleProfileR.batch(crispr_config, cores=1, subset = list(c(4),c(1)))
 
   # check allele names
-  tmp <- AlleleProfileR.sample.distribution(crispr_config, 7, 1, plotparam = 2, plot = F)[,"allele"]
+  tmp <- AlleleProfileR.sample.distribution(crispr_config, 4, 1, plotparam = 2, plot = F)[,"allele"]
   expect_equal("exon.4_33del" %in% tmp, TRUE) # non-chimeric read
   expect_equal("exon.7_126del" %in% tmp, TRUE) # chimeric read
 

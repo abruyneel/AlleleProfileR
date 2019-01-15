@@ -2474,7 +2474,7 @@ AlleleProfileR.batch.summary <- function(config, table = F, plot = T, param = "w
 #' @param pipe_config congifuration object
 #' @param sample.id Sample id, from samples object.
 #' @param gene.id Gene id, from genes table.
-#' @param plotparam If 1, the coding frame length will be plotted. If 2, the read count will be plotted.
+#' @param plotparam If 1, the coding frame length will be plotted. If 2, the read count will be plotted. If 3, read proportion will be plotted.
 #' @param alternate Alternate reference for labeling the HDR variant, as defined by AlleleProfileR.alternatereference.
 #' @param title If TRUE, a title will be included in the graph.
 #' @param axis.text.size The size of the axis labels. Default is 8.
@@ -2797,14 +2797,51 @@ AlleleProfileR.sample.distribution.boolean <- function(pipe_config, sample.id = 
       }
 
       # mark alternate
+      temp_data$allele <- paste(temp_data$allele)
+      temp_data$col <- NA
+
       if(is.data.frame(alternate)) {
         alternateallele <- paste(alternate$allele[which(alternate$gene == geneselected$Gene)])
+
         if (length(alternateallele) > 0) {
+          # find pure HDR
           for (g in 1:length(alternateallele)) {
             if (alternateallele[g] %in% unique(temp_data$allele)) {
-              levels(temp_data$allele)[levels(temp_data$allele) == alternateallele[g]] <- paste(alternateallele[g]," (HDR)", sep="")
+              temp_data$col[which(temp_data$allele == alternateallele[g])] <- "HDR"
+              temp_data$allele[which(temp_data$allele == alternateallele[g])] <- paste(alternateallele[g]," (HDR)", sep="")
             }
           }
+
+          # find unpure HDR-NHEJ hybrid
+          for (g in 1:length(alternateallele)) {
+            # fragments of the allele name.
+            splitalternate <- strsplit(alternateallele[g], split = "[.]")[[1]]
+            splitalternate <- splitalternate[2:length(splitalternate)]
+            # basically, to be considered an unpure HDR, the allele needs to contain these fragments, and some other ones.
+
+            for (q in 1:dim(temp_data)[1]) {
+              # only consider entries which are not HDR, WT, nor Other.
+              if (paste(temp_data$col[q]) != "HDR" & paste(temp_data$allele[q]) != "WT") {
+                tempsplit <- strsplit(paste(temp_data$allele[q]), split = "[.]")[[1]]
+                tempsplit <- tempsplit[2:length(tempsplit)]
+
+                tcount <- 0
+
+                for (y in splitalternate) {
+                  if (y %in% tempsplit) {
+                    tcount <- tcount + 1
+                  }
+                }
+
+                if (tcount == length(splitalternate)) {
+                  # all HDR allele fragments were found
+                  temp_data$allele[q] <- paste(temp_data$allele[q]," (HDR-NHEJ)", sep="")
+                }
+
+              }
+            }
+          }
+
         }
       }
 
@@ -3027,14 +3064,16 @@ AlleleProfileR.plot.alignment <- function(config, sample.id = NA, gene.id = NA, 
       }
 
       # mark alternate
+      cigar_summary$allele <- paste(cigar_summary$allele)
+
       if(is.data.frame(alternate)) {
         alternateallele <- paste(alternate$allele[which(alternate$gene == geneselected$Gene)])
         if (length(alternateallele) > 0) {
           # find pure HDR
           for (g in 1:length(alternateallele)) {
             if (alternateallele[g] %in% unique(cigar_summary$allele)) {
-              cigar_summary$col[which(levels(cigar_summary$allele) == alternateallele[g])] <- "HDR"
-              levels(cigar_summary$allele)[levels(cigar_summary$allele) == alternateallele[g]] <- paste(alternateallele[g]," (HDR)", sep="")
+              cigar_summary$col[which(cigar_summary$allele == alternateallele[g])] <- "HDR"
+              cigar_summary$allele[which(cigar_summary$allele == alternateallele[g])] <- paste(alternateallele[g]," (HDR)", sep="")
             }
           }
 
@@ -3061,7 +3100,7 @@ AlleleProfileR.plot.alignment <- function(config, sample.id = NA, gene.id = NA, 
 
                 if (tcount == length(splitalternate)) {
                   # all HDR allele fragments were found
-                  levels(cigar_summary$allele)[levels(cigar_summary$allele) == paste(cigar_summary$allele[q])] <- paste(cigar_summary$allele[q]," (HDR-NHEJ)", sep="")
+                  cigar_summary$allele[q] <- paste(cigar_summary$allele[q]," (HDR-NHEJ)", sep="")
                 }
 
               }
@@ -3675,7 +3714,7 @@ AlleleProfileR.plot <- function(config, sample.id = NA, gene.id = NA, max.insert
       } else if (type == "count-only") {
         # counts
         plotA <- AlleleProfileR.sample.distribution(config, sample.id, gene.id, plot = TRUE, alternate = alternate,
-                                                    title = FALSE, plotparam = 3, legend.text.size = legend.text.size,
+                                                    title = FALSE, plotparam = plotparam[1], legend.text.size = legend.text.size,
                                                     axis.text.size = axis.text.size, display_other = F, ylabels = FALSE,
                                                     order = plotAlnslist[[4]], emptyrow = T, addwt = F)[[2]]
 

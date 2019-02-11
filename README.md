@@ -5,7 +5,12 @@ Gene editing strategies, such as zinc-finger nucleases (ZFNs), transcription act
 ## Get started
 Currently, AlleleProfileR is only available from GitHub. To install it using devtools in R:
 ```
-install_github("abruyneel/AlleleProfileR")
+# install dependencies
+install.packages(c("devtools","BiocManager"))
+BiocManager::install()
+BiocManager::install(c("BiocGenerics", "Biostrings", "GenomicAlignments", "GenomicRanges", "Rsamtools", "XVector"))
+# install AlleleProfileR using devtools and github
+devtools::install_github("abruyneel/AlleleProfileR")
 ```
 This package has several dependencies, including other R-packages (such as Bioconductor: https://bioconductor.org) as well as external software. For analysing sequencing data, samtools (http://www.htslib.org), bwa (http://bio-bwa.sourceforge.net/bwa.shtml), pear (http://www.exelixis-lab.org/web/software/pear), and fastp (https://github.com/OpenGene/fastp), are needed (or similar tools). In addition, if you would like to conduct in silico experiments, wgsim (https://github.com/lh3/wgsim) is also required.
 

@@ -3,7 +3,7 @@
 Gene editing strategies, such as zinc-finger nucleases (ZFNs), transcription activator-like effector nucleases (TALENs) and clustered regularly interspaced short palindromic repeat/Cas9 (CRISPR/Cas9), are revolutionizing biochemistry. Potent, yet flexible, bioinformatics technologies are required to aid in the profiling of the generated transgenic cell lines, plants or animals. Here, we present AlleleProfileR, a novel analysis tool, written in a combination of R and C++, with the ability to batch process the sequence analysis of large and complex experiments, including base editing and large deletions created by using two guides.
 
 ## Get started
-Currently, AlleleProfileR is only available from GitHub. 
+AlleleProfileR is available as source from GitHub, or as a container from Docker. 
 
 ### Local installation from GitHub
 To install AlleleProfileR from GitHub using devtools in R:
@@ -16,6 +16,7 @@ BiocManager::install(c("BiocGenerics", "Biostrings", "GenomicAlignments", "Genom
 # install AlleleProfileR using devtools and github
 devtools::install_github("abruyneel/AlleleProfileR")
 ```
+
 This package has several dependencies, including other R-packages (such as Bioconductor: https://bioconductor.org) as well as external software. For analysing sequencing data, samtools (http://www.htslib.org), bwa (http://bio-bwa.sourceforge.net/bwa.shtml), pear (http://www.exelixis-lab.org/web/software/pear), and fastp (https://github.com/OpenGene/fastp), are needed (or similar tools). In addition, if you would like to conduct in silico experiments, wgsim (https://github.com/lh3/wgsim) is also required.
 
 ### Docker

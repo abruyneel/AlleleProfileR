@@ -29,6 +29,11 @@ docker run --rm -e PASSWORD=crispr -p 8787:8787 abruyneel/alleleprofiler
 
 Open a web browser and browse to http://localhost:8787 or http://127.0.0.1:8787, logon on RStudio using the username 'rstudio' and password 'crispr', and run the example.R file.
 
+A local folder (here ~\data) can be mounted to the Docker by adding the -v parameter to the command to initialize Docker. Use this strategy to run AlleleProfileR on your own datasets.
+```
+docker run --rm -e PASSWORD=crispr -p 8787:8787 -v ~/data:/home/rstudio/data abruyneel/alleleprofiler
+```
+
 ## Configuration
 
 ### File structure

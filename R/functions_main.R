@@ -3893,12 +3893,13 @@ AlleleProfileR.plot.seqlogo <- function(config, sample.id = NA, gene.id = NA, cu
           ggplot2::theme(axis.text.y = ggplot2::element_text(size = axis.text.size),
                          axis.text.x = ggplot2::element_blank(),
                          axis.title.x = ggplot2::element_text(vjust = -0.5),
+                         axis.title.y = ggplot2::element_text(size = axis.text.size+2),
                          legend.position="none")
 
         # plot the reference too
         aln <- data.frame(
           letter = strsplit(ref, "")[[1]],
-          seqs = "Reference",
+          seqs = "Ref",
           x       = 1:nchar(paste(ref))
         )
 
@@ -3906,7 +3907,9 @@ AlleleProfileR.plot.seqlogo <- function(config, sample.id = NA, gene.id = NA, cu
           ggplot2::geom_text(ggplot2::aes(label=letter)) +
           ggplot2::xlab('') + ggseqlogo::theme_logo() + ggplot2::ylab('Sequence') +
           ggplot2::scale_x_continuous(expand = c(0.105, 0), breaks = 1:nchar(paste(ref)), labels = output$relpos) +
-          ggplot2::theme(legend.position = 'none')
+          ggplot2::theme(legend.position = 'none',
+                         axis.text.y = ggplot2::element_text(size = axis.text.size),
+                         axis.title.y = ggplot2::element_text(size = axis.text.size+2))
 
         # Combine using cowplot
         p <- cowplot::plot_grid(p1, p2, ncol = 1, align = 'v', rel_heights = c(5,1))

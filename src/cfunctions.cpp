@@ -853,10 +853,11 @@ std::string variantnameC(List dels, List ins, List snp) {
   // output
   std::string out;
 
-  if (bool_dels | bool_ins) {
+  if (bool_dels | bool_ins | (no_snps > 0)) {
     // process output
     out += "exon";
 
+    // deletions
     if (bool_dels) {
       for (int i=0; i < delspos.size(); i++) {
         if (delspos[i].length() > 0) {
@@ -865,6 +866,7 @@ std::string variantnameC(List dels, List ins, List snp) {
       }
     }
 
+    // insertions
     if (bool_ins) {
       for (int i=0; i < inspos.size(); i++) {
         if (inspos[i].length() > 0) {
@@ -873,17 +875,17 @@ std::string variantnameC(List dels, List ins, List snp) {
       }
     }
 
-  } else {
-    out = "WT";
-  }
-
-  // snps
-  if (no_snps > 0) {
-    for (int i=0; i < snpspos.size(); i++) {
-      if (snpsseq[i].length() == 1) {
-        out += ".SNP("+snpspos[i]+":"+snpsseq[i]+")";
+    // snps
+    if (no_snps > 0) {
+      for (int i=0; i < snpspos.size(); i++) {
+        if (snpsseq[i].length() == 1) {
+          out += ".SNP("+snpspos[i]+":"+snpsseq[i]+")";
+        }
       }
     }
+
+  } else {
+    out = "WT";
   }
 
   return(out);

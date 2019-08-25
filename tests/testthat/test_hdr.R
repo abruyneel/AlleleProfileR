@@ -9,7 +9,7 @@ test_that("HDR", {
                                         index = "files/index/frag.fa", cutoff = 0.005, ignore.snp = F,
                                         cut.range = 0, ignore.single = T, cutoff.large = 25, ignore.chimeric = F,
                                         chimeric.max.insertion.size = 50, suppress.messages = T)
-  alternateinfo <- AlleleProfileR.alternatereference(crispr_config, alternate = "files/index/alternate.fastq")
+  alternateinfo <- AlleleProfileR.alternatereference(crispr_config, alternate = "files/index/alternate.fastq", overwrite = F)
 
   # run
   AlleleProfileR.batch(crispr_config, cores=1, subset = list(c(3),c(2)))

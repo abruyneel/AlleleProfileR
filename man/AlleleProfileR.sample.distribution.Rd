@@ -19,7 +19,7 @@ AlleleProfileR.sample.distribution(pipe_config, sample.id = NA,
 
 \item{plot}{Plot results?}
 
-\item{plotparam}{If 1, the coding frame length will be plotted. If 2, the read count will be plotted.}
+\item{plotparam}{If 1, the coding frame length will be plotted. If 2, the read count will be plotted. If 3, read proportion will be plotted.}
 
 \item{alternate}{Alternate reference for labeling the HDR variant, as defined by AlleleProfileR.alternatereference.}
 

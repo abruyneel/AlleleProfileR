@@ -426,7 +426,7 @@ AlleleProfileR.determine.variants <- function(bamtable, index, gene, cutoff.larg
             }
           }
 
-        } else {
+        } else if (!checkcutrange && output_snp$count > 0) {
           for (ts in 1:length(output_snp$snppos)) {
             tempsnps <- append(tempsnps, output_snp$snppos[ts])
             tempsnpsaltbase <- append(tempsnpsaltbase, output_snp$altbase[ts])
@@ -437,6 +437,9 @@ AlleleProfileR.determine.variants <- function(bamtable, index, gene, cutoff.larg
         if (length(tempsnps) == 0) {
           tempsnps <- c("")
           tempsnpsaltbase <- c("")
+          output_snp$count <- 0
+        } else {
+          output_snp$count <- length(tempsnps)
         }
 
         output_snp$snppos <- tempsnps
@@ -971,7 +974,7 @@ AlleleProfileR.determine.variants <- function(bamtable, index, gene, cutoff.larg
                 }
               }
 
-            } else {
+            } else if (!checkcutrange && output_snp$count > 0) {
               for (ts in 1:length(output_snp$snppos)) {
                 tempsnps <- append(tempsnps, output_snp$snppos[ts])
                 tempsnpsaltbase <- append(tempsnpsaltbase, output_snp$altbase[ts])
@@ -982,6 +985,9 @@ AlleleProfileR.determine.variants <- function(bamtable, index, gene, cutoff.larg
             if (length(tempsnps) == 0) {
               tempsnps <- c("")
               tempsnpsaltbase <- c("")
+              output_snp$count <- 0
+            } else {
+              output_snp$count <- length(tempsnps)
             }
 
             output_snp$snppos <- tempsnps
@@ -1792,12 +1798,13 @@ AlleleProfileR.parsecodingframe <- function(obj, gene, index, fs = F) {
 #' @title Determine the allele name of HDR sequences
 #' @description This function determines the name of the variant that would be introduced if homologous recombination with the template were to occur.
 #' @param alternate Path to .fasta file with HDR sequences
+#' @param overwrite overwrite existing alternate.bam file
 #' @inheritParams AlleleProfileR.map
 #' @inheritParams AlleleProfileR.batch
 #' @return Data.frame with the HDR variant names for each gene in the gene table.
 #' @author Arne Bruyneel
 #' @export
-AlleleProfileR.alternatereference <- function(config, alternate) {
+AlleleProfileR.alternatereference <- function(config, alternate, overwrite = T) {
   # gene table
   genes <- config[[2]]
   # config[[3]] is the real index
@@ -1814,7 +1821,7 @@ AlleleProfileR.alternatereference <- function(config, alternate) {
   suppress.messages <- config[[12]]
 
   # make sure that the bam file exists
-  if (!file.exists("files/index/alternate.bam")) {
+  if (!file.exists("files/index/alternate.bam") || overwrite) {
     cmd <- paste0("bwa mem ", index, " ", alternate, " | samtools view -Sb - > files/index/alternate.bam")
     message(cmd, "\n");
     system(cmd)
@@ -3306,7 +3313,7 @@ AlleleProfileR.plot.alignment <- function(config, sample.id = NA, gene.id = NA, 
                          axis.text.x = ggplot2::element_text(size = axis.text.size),
                          axis.title.x = ggplot2::element_text(vjust = -0.5),
                          legend.position = "bottom")+
-          ggplot2::guides(fill=F)+ggplot2::xlab("")+
+          ggplot2::guides(fill=F)+ggplot2::xlab("Position (relative to exon start)")+
           ggplot2::scale_y_discrete(labels = function(x) AlleleProfileR.labelwrapper(x))
 
         if (is.null(xtick.labs)){
@@ -3905,7 +3912,7 @@ AlleleProfileR.plot.seqlogo <- function(config, sample.id = NA, gene.id = NA, cu
 
         p2 <- ggplot2::ggplot(aln, ggplot2::aes(x, seqs)) +
           ggplot2::geom_text(ggplot2::aes(label=letter)) +
-          ggplot2::xlab('') + ggseqlogo::theme_logo() + ggplot2::ylab('Sequence') +
+          ggplot2::xlab("Position (relative to exon start)") + ggseqlogo::theme_logo() + ggplot2::ylab('Sequence') +
           ggplot2::scale_x_continuous(expand = c(0.105, 0), breaks = 1:nchar(paste(ref)), labels = output$relpos) +
           ggplot2::theme(legend.position = 'none',
                          axis.text.y = ggplot2::element_text(size = axis.text.size),

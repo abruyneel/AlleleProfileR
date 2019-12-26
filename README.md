@@ -97,4 +97,4 @@ The AlleleProfileR.batch.summary() command plots an overview of the percentage W
 
 ## Reference
 
-Bruyneel et al., "AlleleProfileR: a Versatile Tool to Identify and Profile Sequence Variants in Edited Genomes", paper submitted.
+Bruyneel AAN, Colas AR, Karakikes I, Mercola M (2019) AlleleProfileR: A versatile tool to identify and profile sequence variants in edited genomes. PLOS ONE 14(12): e0226694. https://doi.org/10.1371/journal.pone.0226694

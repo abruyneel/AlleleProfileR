@@ -20,7 +20,7 @@ devtools::install_github("abruyneel/AlleleProfileR")
 This package has several dependencies, including other R-packages (such as Bioconductor: https://bioconductor.org) as well as external software. For analysing sequencing data, samtools (http://www.htslib.org), bwa (http://bio-bwa.sourceforge.net/bwa.shtml), pear (http://www.exelixis-lab.org/web/software/pear), and fastp (https://github.com/OpenGene/fastp), are needed (or similar tools). In addition, if you would like to conduct in silico experiments, wgsim (https://github.com/lh3/wgsim) is also required.
 
 ### Docker
-AlleleProfileR can be run from a docker container too, and can be downloaded from the Docker hub repository (abruyneel/alleleprofiler). The container is based on the rocker/verse image and deploys RStudio to use R, and also contains some of the external tools that can be used to process sequencing data, such as samtools (http://www.htslib.org) and bwa (http://bio-bwa.sourceforge.net/bwa.shtml). In addition, an example script and demo data is included.
+AlleleProfileR can be run from a docker container too, and can be downloaded from the Docker hub repository (abruyneel/alleleprofiler). The container is based on the rocker/verse image and deploys RStudio to use R, and also contains some of the external tools that can be used to process sequencing data, such as samtools (http://www.htslib.org) and bwa (http://bio-bwa.sourceforge.net/bwa.shtml). In addition, an example script and demo data is included. The Dockerfile can be found in the https://github.com/abruyneel/AlleleProfileR_docker repository.
 
 To start the docker container: 
 ```
